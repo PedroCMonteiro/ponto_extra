@@ -121,9 +121,20 @@ class _PaginaCadastroState extends State<PaginaCadastro> {
   TextEditingController _nome = TextEditingController();
   TextEditingController _data = TextEditingController();
 
-  bool isValidDate(String data) {
-    print(data);
-    return false;
+  bool isValidDate(String date) {
+    if (date.length != 10) return false;
+    int day, month, year;
+
+    day = int.parse(date.substring(0, 2));
+    month = int.parse(date.substring(3, 5));
+    year = int.parse(date.substring(6, 10));
+
+    DateTime tempDate = DateTime(year, month, day);
+    if (tempDate.compareTo(DateTime.now()) > 0) return false;
+
+    return (day == tempDate.day &&
+        month == tempDate.month &&
+        year == tempDate.year);
   }
 
   @override

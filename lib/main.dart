@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:date_format/date_format.dart';
 import 'package:intl/intl.dart';
+import 'package:masked_text/masked_text.dart';
 
 void main() {
   runApp(MyApp());
@@ -121,12 +122,8 @@ class _PaginaCadastroState extends State<PaginaCadastro> {
   TextEditingController _data = TextEditingController();
 
   bool isValidDate(String data) {
-    try {
-      DateFormat('dd/MM/yyyy').parse(data);
-      return true;
-    } catch (e) {
-      return false;
-    }
+    print(data);
+    return false;
   }
 
   @override
@@ -135,71 +132,80 @@ class _PaginaCadastroState extends State<PaginaCadastro> {
       appBar: AppBar(
         title: Text('Cadastro'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(5.0),
-            child: TextField(
-              controller: _nome,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Nome',
+      body: Padding(
+        padding: const EdgeInsets.only(
+          top: 20,
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: TextField(
+                controller: _nome,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Nome',
+                ),
+                maxLength: 100,
               ),
-              maxLength: 100,
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(5.0),
-            child: TextField(
-              controller: _data,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Data de Nascimento',
-              ),
-              maxLength: 10,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(20.0),
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_nome.text != '' && isValidDate(_data.text))
-                          Navigator.pop(
-                              context, Usuario(_nome.text, _data.text));
-                      },
-                      child: Text(
-                        'Salvar',
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            return Colors.grey; // Use the component's default.
-                          },
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context, null);
-                      },
-                      child: Text(
-                        'Voltar',
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
-                  ],
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: MaskedTextField(
+                maskedTextFieldController: _data,
+                mask: 'xx/xx/xxxx',
+                maxLength: 10,
+                keyboardType: TextInputType.number,
+                inputDecoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Data de Nascimento',
+                  counterText: '',
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.all(20.0),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_nome.text != '' && isValidDate(_data.text))
+                            Navigator.pop(
+                                context, Usuario(_nome.text, _data.text));
+                        },
+                        child: Text(
+                          'Salvar',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              return Colors
+                                  .grey; // Use the component's default.
+                            },
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context, null);
+                        },
+                        child: Text(
+                          'Voltar',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

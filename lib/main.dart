@@ -174,46 +174,53 @@ class _PaginaCadastroState extends State<PaginaCadastro> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.all(20.0),
-                  child: Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_nome.text != '' && isValidDate(_data.text))
-                            Navigator.pop(
-                                context, Usuario(_nome.text, _data.text));
-                        },
-                        child: Text(
-                          'Salvar',
-                          style: TextStyle(fontSize: 22),
-                        ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: 30,
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_nome.text != '' && isValidDate(_data.text))
+                          Navigator.pop(
+                              context, Usuario(_nome.text, _data.text));
+                      },
+                      child: Text(
+                        'Salvar',
+                        style: TextStyle(fontSize: 22),
                       ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                              return Colors
-                                  .grey; // Use the component's default.
-                            },
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context, null);
-                        },
-                        child: Text(
-                          'Voltar',
-                          style: TextStyle(fontSize: 22),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 30,
+                    ),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            return Colors.grey; // Use the component's default.
+                          },
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context, null);
+                      },
+                      child: Text(
+                        'Voltar',
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
